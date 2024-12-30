@@ -41,3 +41,12 @@ resourceQuota:
       memory: "16Gi"
     pods: "8"
 
+externalDNS:
+  provider: aws
+  aws:
+    region: us-west-2
+  sources:
+    - service
+    - ingress
+  domainFilters:
+    - domainname.com

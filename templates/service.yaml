@@ -10,3 +10,17 @@ spec:
       port: {{ .Values.service.port }}
       targetPort: {{ .Values.service.targetPort }}
   type: {{ .Values.service.type }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: my-service.domainname.com
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: my-app
