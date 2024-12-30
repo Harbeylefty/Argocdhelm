@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: python-metrics-app
-          image: python:3.8-slim  # Using Python slim image
+          image: python:3.11-slim  # Using Python slim image
           ports:
             - containerPort: 5000  # Expose port 5000 for Prometheus scraping
           command:
