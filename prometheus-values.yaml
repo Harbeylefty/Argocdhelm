@@ -1,7 +1,10 @@
 prometheus:
   prometheusSpec:
     # Default scrape configuration for Kubernetes metrics
-    additionalScrapeConfigs: []
+    additionalScrapeConfigs: 
+      - job_name: 'python-metrics-app'
+        static_configs:
+          - targets: ['python-metrics-app.monitoring.svc.cluster.local:5000'] 
 
     # Alert rule for low CPU usage for `python-dev-environment` pods
     additionalPrometheusRules:
