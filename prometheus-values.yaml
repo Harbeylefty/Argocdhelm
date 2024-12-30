@@ -31,7 +31,7 @@ alertmanager:
     receivers:
       - name: 'slack-notifications'
         slack_configs:
-          - api_url: 'https://hooks.slack.com/services/xxx/xxx/xxx'  # Replace with your actual Slack webhook URL
+          - api_url: '$(SLACK_WEBHOOK_URL)'  # Replace with your actual Slack webhook URL
             channel: '#all-harbey'  # Specify your Slack channel
             send_resolved: true
     templates:
