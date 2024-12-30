@@ -21,3 +21,23 @@ hpa:
   maxReplicas: 10
   cpuUtilization: 20  # Scale down when CPU usage goes below 20%
   memoryUtilization: 60  # Scale down when memory usage goes below 60%
+
+resourceQuota:
+  teamA:
+    requests:
+      cpu: "4"
+      memory: "8Gi"
+    limits:
+      cpu: "8"
+      memory: "16Gi"
+    pods: "8"
+  
+  teamB:
+    requests:
+      cpu: "4"
+      memory: "8Gi"
+    limits:
+      cpu: "8"
+      memory: "16Gi"
+    pods: "8"
+
