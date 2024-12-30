@@ -31,9 +31,9 @@ spec:
               REQUESTS = Counter('python_app_requests', 'Total number of requests')
               start_http_server(5000)  # Exposes metrics on port 5000
               while True:
-              REQUESTS.inc()  # Increment the counter
-              time.sleep(1)  # Simulate work
-                        "
+                  REQUESTS.inc()  # Increment the counter
+                  time.sleep(1)  # Simulate work
+              "
 ---
 apiVersion: v1
 kind: Service
@@ -47,4 +47,5 @@ spec:
     - protocol: TCP
       port: 5000
       targetPort: 5000  # Make the metrics accessible
+      
 
