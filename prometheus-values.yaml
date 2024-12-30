@@ -12,11 +12,11 @@ prometheus:
           - name: simple-alerts
             rules:
               - alert: LowCPUUsage
-                expr: avg(rate(container_cpu_usage_seconds_total{pod=~"python-dev-environment.*"}[5m])) < 0.1
+                expr: avg(rate(container_cpu_usage_seconds_total{pod=~"python-dev-environment.*"}[5m])) < 0.01
                 labels:
                   severity: warning
                 annotations:
-                  summary: "CPU usage is under 10% for the last 5 minutes."
+                  summary: "CPU usage is under 1% for the last 5 minutes."
                   description: "The CPU usage of the python-dev-environment pods is low."
 
 
