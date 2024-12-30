@@ -2,14 +2,14 @@ apiVersion: v1
 kind: ResourceQuota
 metadata:
   name: resource-quota
-  namespace: team-b
+  namespace: team-a
 spec:
   hard:
-    requests.cpu: {{ .Values.resourceQuota.teamB.requests.cpu }}
-    requests.memory: {{ .Values.resourceQuota.teamB.requests.memory }}
-    limits.cpu: {{ .Values.resourceQuota.teamB.limits.cpu }}
-    limits.memory: {{ .Values.resourceQuota.teamB.limits.memory }}
-    pods: {{ .Values.resourceQuota.teamB.pods }}
+    requests.cpu: {{ .Values.resourceQuota.teamA.requests.cpu }}
+    requests.memory: {{ .Values.resourceQuota.teamA.requests.memory }}
+    limits.cpu: {{ .Values.resourceQuota.teamA.limits.cpu }}
+    limits.memory: {{ .Values.resourceQuota.teamA.limits.memory }}
+    pods: {{ .Values.resourceQuota.teamA.pods }}
 
 
 ---
