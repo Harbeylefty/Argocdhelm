@@ -1,0 +1,39 @@
+prometheus:
+  prometheusSpec:
+    # Scraping additional targets (your Python app's metrics endpoint)
+    additionalScrapeConfigs:
+      - job_name: 'python-app'
+        static_configs:
+          - targets: ['python-dev-environment:5000']  # Ensure your app exposes metrics here
+
+    # Simple alert rule for low CPU usage
+    additionalPrometheusRules:
+      - groups:
+          - name: simple-alerts
+            rules:
+              - alert: LowCPUUsage
+                expr: avg(rate(container_cpu_usage_seconds_total{pod=~"python-dev-environment.*"}[5m])) < 0.1
+                labels:
+                  severity: warning
+                annotations:
+                  summary: "CPU usage is under 10% for the last 5 minutes."
+                  description: "The CPU usage of the python-dev-environment pods is low."
+
+
+
+alertmanager:
+  alertmanagerConfig:
+    global:
+      resolve_timeout: 5m
+    route:
+      group_by: ['alertname']
+      receiver: 'slack-notifications'
+    receivers:
+      - name: 'slack-notifications'
+        slack_configs:
+          - api_url: 'https://hooks.slack.com/services/xxx/xxx/xxx'  # Replace with your actual Slack webhook URL
+            channel: '#all-harbey'  # Specify your Slack channel
+            send_resolved: true
+    templates:
+      - '{{ .Values.CommonAnnotations.summary | default "Default summary" }}'
+      - '{{ .Values.CommonAnnotations.description | default "Default description" }}'
