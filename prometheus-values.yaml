@@ -1,12 +1,9 @@
 prometheus:
   prometheusSpec:
-    # Scraping additional targets (your Python app's metrics endpoint)
-    additionalScrapeConfigs:
-      - job_name: 'python-app'
-        static_configs:
-          - targets: ['python-dev-environment:5000']  # Ensure your app exposes metrics here
+    # Default scrape configuration for Kubernetes metrics
+    additionalScrapeConfigs: []
 
-    # Simple alert rule for low CPU usage
+    # Alert rule for low CPU usage for `python-dev-environment` pods
     additionalPrometheusRules:
       - groups:
           - name: simple-alerts
@@ -16,8 +13,10 @@ prometheus:
                 labels:
                   severity: warning
                 annotations:
-                  summary: "CPU usage is under 1% for the last 5 minutes."
+                  summary: "CPU usage is under 1% for the last 1 minute."
                   description: "The CPU usage of the python-dev-environment pods is low."
+
+
 
 
 alertmanager:
