@@ -19,7 +19,7 @@ spec:
         image: "{{ .Values.baseImage }}"  # Dynamic base image
         resources:
           requests:
-            memory: "{{ .Values.resources.requests.memory }}"  # Dynamic memory request
+            memory: "{{ .Values.resources.requests.memory }}"  
             cpu: "{{ .Values.resources.requests.cpu }}"  # Dynamic CPU request
           limits:
             memory: "{{ .Values.resources.limits.memory }}"
