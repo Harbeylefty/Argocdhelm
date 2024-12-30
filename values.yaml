@@ -1,0 +1,15 @@
+baseImage: "python:3.11-slim"
+resources:
+  requests:
+    memory: "512Mi"
+    cpu: "250m"
+  limits:
+    memory: "1Gi"
+    cpu: "500m"
+    
+packages: "numpy,pandas"
+
+service:
+  port: 5000
+  targetPort: 5000
+  type: ClusterIP
