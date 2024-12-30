@@ -6,10 +6,18 @@ resources:
   limits:
     memory: "1Gi"
     cpu: "500m"
-    
+
 packages: "numpy,pandas"
 
 service:
   port: 5000
   targetPort: 5000
   type: ClusterIP
+
+hpa:
+  name: python-dev-environment-hpa
+  namespace: default  # or any other namespace you want
+  minReplicas: 1
+  maxReplicas: 10
+  cpuUtilization: 20  # Scale down when CPU usage goes below 20%
+  memoryUtilization: 60  # Scale down when memory usage goes below 60%
