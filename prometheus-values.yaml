@@ -12,7 +12,7 @@ prometheus:
           - name: simple-alerts
             rules:
               - alert: LowCPUUsage
-                expr: avg(rate(container_cpu_usage_seconds_total{pod=~"python-dev-environment.*"}[5m])) < 0.01
+                expr: avg(rate(container_cpu_usage_seconds_total{pod=~"python-dev-environment.*"}[1m])) < 0.01
                 labels:
                   severity: warning
                 annotations:
@@ -20,20 +20,29 @@ prometheus:
                   description: "The CPU usage of the python-dev-environment pods is low."
 
 
-
 alertmanager:
-  alertmanagerConfig:
-    global:
-      resolve_timeout: 5m
-    route:
-      group_by: ['alertname']
-      receiver: 'slack-notifications'
-    receivers:
-      - name: 'slack-notifications'
-        slack_configs:
-          - api_url: '$(SLACK_WEBHOOK_URL)'  # Replace with your actual Slack webhook URL
-            channel: '#all-harbey'  # Specify your Slack channel
-            send_resolved: true
-    templates:
+  alertmanagerSpec:
+    containers:
+      - name: alertmanager
+        env:
+          - name: SLACK_WEBHOOK_URL
+            valueFrom:
+              secretKeyRef:
+                name: slack-webhook-url  # Kubernetes secret name
+                key: SLACK_WEBHOOK_URL    # Key inside the secret
+
+    alertmanagerConfig:
+      global:
+        resolve_timeout: 5m
+      route:
+        group_by: ['alertname']
+        receiver: 'slack-notifications'
+      receivers:
+        - name: 'slack-notifications'
+          slack_configs:
+            - api_url: '$(SLACK_WEBHOOK_URL)'
+              channel: '#all-harbey'
+              send_resolved: true
+      templates:
       - '{{ .Values.CommonAnnotations.summary | default "Default summary" }}'
       - '{{ .Values.CommonAnnotations.description | default "Default description" }}'
